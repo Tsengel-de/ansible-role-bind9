@@ -1,14 +1,13 @@
 galaxy_info:
-  role_name: bind9
-  author: Tsengel-de
+  author: tsengel-de
+  namespace: tsengel-de
   description: Role to install Bind9 DNS server on Ubuntu
-  company: com
   license: MIT
   min_ansible_version: '2.9'
-  galaxy_tags:
-  - bind9
-  - dns
-  - nameserver
   platforms:
-  - name: Ubuntu - jammy - noble
-  namespace: Tsengel-de
+    - name: Ubuntu - jammy - noble
+  galaxy_tags:
+    - bind9
+    - dns
+    - nameserver
+dependencies: []
