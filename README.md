@@ -229,7 +229,7 @@ The following playbook install and configure DNS server as authoritative server 
   become: true
   gather_facts: true
   roles:
-    - role: ricsanfre.bind9
+    - role: tsengel.bind9
       bind9_authoritative: true
       bind9_forward: true
       bind9_recursor: true
@@ -297,7 +297,7 @@ The following configure a primary (`ns1.homelab.example.com`) and secondary (`ns
   become: true
   gather_facts: true
   roles:
-    - role: ricsanfre.bind9
+    - role: tsengel.bind9
       bind9_authoritative: true
       bind9_forward: true
       bind9_recursor: true
@@ -370,7 +370,7 @@ The following configure a primary (`ns1.homelab.example.com`) and secondary (`ns
   become: true
   gather_facts: true
   roles:
-    - role: ricsanfre.bind9
+    - role: tsengel.bind9
       bind9_authoritative: true
       bind9_forward: true
       bind9_recursor: true
@@ -397,7 +397,7 @@ MIT
 Author Information
 ------------------
 
-Created by Ricardo Sanchez (ricsanfre)
+Created by Tsengel (tsengel)
 
 
 

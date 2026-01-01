@@ -9,7 +9,7 @@ driver:
   name: docker
 platforms:
   - name: ns1.homelab.example.com
-    image: "ricsanfre/docker-${MOLECULE_DISTRO:-ubuntu}-ansible:${MOLECULE_RELEASE:-latest}"
+    image: "tsengel/docker-${MOLECULE_DISTRO:-ubuntu}-ansible:${MOLECULE_RELEASE:-latest}"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
@@ -29,7 +29,7 @@ platforms:
       - name: molecule
         ipv4_address: "10.11.0.11"
   - name: ns2.homelab.example.com
-    image: "ricsanfre/docker-${MOLECULE_DISTRO:-ubuntu}-ansible:${MOLECULE_RELEASE:-latest}"
+    image: "tsengel/docker-${MOLECULE_DISTRO:-ubuntu}-ansible:${MOLECULE_RELEASE:-latest}"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
