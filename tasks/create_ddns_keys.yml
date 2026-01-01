@@ -1,0 +1,11 @@
+---
+- name: Determine if DDNS key already exists
+  ansible.builtin.stat:
+    path: "/etc/bind/keys/{{ item.ddns_update_key }}.key"
+  register: update_keyfile_tmp
+  when: item.ddns_update_key is defined
+
+- name: Generate DDNS key
+  ansible.builtin.shell: "tsig-keygen -a {{ item.ddns_update_key_algorithm | d('hmac-sha512') }} {{ item.ddns_update_key }} > /etc/bind/keys/{{ item.ddns_update_key }}.key"
+  changed_when: true
+  when: item.ddns_update_key is defined and not update_keyfile_tmp.stat.exists

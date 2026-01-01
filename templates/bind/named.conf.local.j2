@@ -1,0 +1,53 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+// The following zones are managed by this DNS Server //
+{% for zone in bind9_zones|sort(attribute='name') %}
+{% set zone_type = zone.type|default('primary') %}
+zone "{{ zone.name }}" {
+    type {{ zone_type }};
+{%   if zone_type == 'primary' %}
+    file "{{ bind9_zonedir }}/db.{{ zone.name }}";
+{%     if zone.ddns_update_policy_grant|default() and zone.ddns_update_key|default() %}
+    update-policy {
+        grant {{ zone.ddns_update_key }} {{ zone.ddns_update_policy_grant }};
+    };
+{%     endif %}
+{%     if zone.secondary_servers|default()  %}
+    allow-transfer {
+{%        for secondary in zone.secondary_servers %}
+        {{ secondary }};
+{%         endfor %}
+    };
+{%     endif %}
+{%   elif zone_type == 'secondary' %}
+    file "/var/lib/bind/db.{{ zone.name }}";
+{%     if zone.primary_servers|default() %}
+    notify no;
+    primaries {
+{%       if zone.primary_servers|default() %}
+{%         for primary in zone.primary_servers %}
+        {{ primary }};
+{%         endfor %}
+{%       endif %}
+    };
+{%     endif %}
+{%   else %}
+{%      if zone_type == 'forward' %}
+    forwarders {
+{%         for fwd in zone.forwarders %}
+        {{ fwd }}; 
+{%         endfor %}
+   }; 
+{%     endif %}
+{%   endif %}
+{%   if zone.null_forwarders is defined and zone.null_forwarders and not zone_type == 'forward' %}
+    forwarders {};
+{%   endif %}
+};
+{% endfor %}
